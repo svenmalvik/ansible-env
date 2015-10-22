@@ -18,11 +18,14 @@
     yum: name=git state=present
 
   - name: create prosject folder
+    tags: repo
     file: path=~/projects state=directory mode=0755
+
+  - name: print default_repo
+    debug: msg={{default_repo}}
+    tags: repo
 
   - name: clone default git repo
     tags: repo
     git:  repo={{ default_repo }} 
-          dest=~/projects/default_repo  
-          clone=no 
-          accept_hostkey=yes
+          dest=/home/hosm/projects/configs 
