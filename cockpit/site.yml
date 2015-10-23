@@ -21,7 +21,8 @@
     yum: name=python-pip state=present
 
   - name: install docker python
-    sudo: yes
+    become: yes
+    become_method: sudo 
     pip: name=docker-py state=present
 
   - name: start docker
