@@ -10,11 +10,21 @@
       state: reloaded
       ports: 80
 
+  - name: create haproxy config file directory
+    become: yes
+    file: path=/etc/haproxy state=directory
+
+  - name: copy haproxy config
+    become: yes
+    copy: src=haproxy.cfg dest=/etc/haproxy
+
   - name: run HAProxy
     become: yes
     docker:
       docker_api_version: 1.18
-      name: reverse proxy
+      name: reverse_proxy
       image: haproxy
       state: reloaded
       ports: 80:80
+      volumes:
+        - /etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
