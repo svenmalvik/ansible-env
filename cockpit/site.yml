@@ -19,10 +19,10 @@
 
   - name: install pip
     yum: name=python-pip state=present
+    become_method: sudo 
+    become: yes
 
   - name: install docker python
-    become: yes
-    become_method: sudo 
     pip: name=docker-py state=present
 
   - name: start docker
