@@ -17,6 +17,12 @@
     sudo: yes
     yum: name=docker state=present
 
+  - name: install pip
+    yum: name=pip state=present
+
+  - name: install docker python
+    pip: name=docker-py state=present
+
   - name: start docker
     sudo: yes
     service: name=docker enabled=true state=started    

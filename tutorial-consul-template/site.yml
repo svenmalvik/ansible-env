@@ -5,4 +5,5 @@
     docker:
       name: serviceONE
       image: tutum/hello-world
-      state: present
+      state: reloaded
+
