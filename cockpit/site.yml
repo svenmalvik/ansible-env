@@ -1,50 +1,50 @@
 ---
 - hosts: cockpit
   tasks:  
-  - name: update yum  
+  - name:   update yum  
     become: yes
-    yum: name=*
+    yum:    name=*
 
-  - name: add epel extras
+  - name:   add epel extras
     become: yes
-    yum: name=epel-release state=present
+    yum:    name=epel-release state=latest
 
-  - name: install ansible
+  - name:   install ansible
     become: yes
-    yum: name=ansible state=present
+    yum:    name=ansible state=latest
 
-  - name: docker official yum repo
+  - name:   docker official yum repo
     become: yes
-    copy: src=docker.repo
-        dest=/etc/yum.repos.d/
-        owner=root group=root mode=0644
+    copy:   src=docker.repo
+            dest=/etc/yum.repos.d/
+            owner=root group=root mode=0644
 
-  - name: installer docker-engine
+  - name:   installer docker-engine
     become: yes
-    yum: name=docker-engine state=latest
+    yum:    name=docker-engine state=latest
 
-  - name: install pip
+  - name:   install pip
     become: yes
-    yum: name=python-pip state=present
+    yum:    name=python-pip state=present
 
   - name: install docker python
-    pip: name=docker-py state=present
+    pip:  name=docker-py state=present
 
-  - name: start docker
-    become: yes
-    service: name=docker enabled=true state=started    
+  - name:     start docker
+    become:   yes
+    service:  name=docker enabled=true state=started    
 
-  - name: install git
+  - name:   install git
     become: yes
-    yum: name=git state=present
+    yum:    name=git state=present
 
   - name: create prosject folder
     tags: repo
     file: path=~/projects state=directory mode=0755
 
-  - name: print default git repo to fetch
-    debug: msg={{default_repo}}
-    tags: repo
+  - name:   print default git repo to fetch
+    debug:  msg={{default_repo}}
+    tags:   repo
 
   - name: clone default git repo
     tags: repo
