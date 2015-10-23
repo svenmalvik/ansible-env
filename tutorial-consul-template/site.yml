@@ -4,7 +4,9 @@
   - name: install serviceONE
     become: yes
     docker:
+      docker_api_version: 1.18
       name: serviceONE
       image: tutum/hello-world
       state: reloaded
+      port: 80
 
