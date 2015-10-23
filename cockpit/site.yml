@@ -2,35 +2,34 @@
 - hosts: cockpit
   tasks:  
   - name: update yum  
-    sudo: yes
+    become: yes
     yum: name=*
 
   - name: add epel extras
-    sudo: yes
+    become: yes
     yum: name=epel-release state=present
 
   - name: install ansible
-    sudo: yes
+    become: yes
     yum: name=ansible state=present
 
   - name: install docker
-    sudo: yes
+    become: yes
     yum: name=docker state=present
 
   - name: install pip
-    yum: name=python-pip state=present
-    become_method: sudo 
     become: yes
+    yum: name=python-pip state=present
 
   - name: install docker python
     pip: name=docker-py state=present
 
   - name: start docker
-    sudo: yes
+    become: yes
     service: name=docker enabled=true state=started    
 
   - name: install git
-    sudo: yes
+    become: yes
     yum: name=git state=present
 
   - name: create prosject folder
@@ -45,3 +44,4 @@
     tags: repo
     git:  repo={{ default_repo }} 
           dest=/home/hosm/projects/default_repo
+          force=yes
