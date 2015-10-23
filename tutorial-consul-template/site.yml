@@ -2,6 +2,7 @@
 - hosts: cockpit
   tasks:
   - name: install serviceONE
+    become: yes
     docker:
       name: serviceONE
       image: tutum/hello-world

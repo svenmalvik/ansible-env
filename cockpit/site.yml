@@ -13,9 +13,15 @@
     become: yes
     yum: name=ansible state=present
 
-  - name: install docker
+  - name: docker official yum repo
     become: yes
-    yum: name=docker state=present
+    copy: src=docker.repo
+        dest=/etc/yum.repos.d/
+        owner=root group=root mode=0644
+
+  - name: installer docker-engine
+    become: yes
+    yum: name=docker-engine state=latest
 
   - name: install pip
     become: yes
