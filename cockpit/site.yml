@@ -17,6 +17,12 @@
     sudo: yes
     yum: name=docker state=present
 
+  - name: installer epel
+    yum: name="https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+         state=present
+    sudo: yes
+    ignore_errors: yes
+
   - name: install pip
     yum: name=python-pip state=present
 
