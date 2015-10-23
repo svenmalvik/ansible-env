@@ -18,6 +18,7 @@
     yum: name=docker state=present
 
   - name: start docker
+    sudo: yes
     service: name=docker enabled=true state=started    
 
   - name: install git
