@@ -8,5 +8,5 @@
       name: serviceONE
       image: tutum/hello-world
       state: reloaded
-      port: 80
+      ports: 80
 
