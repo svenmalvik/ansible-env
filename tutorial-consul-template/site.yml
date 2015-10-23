@@ -1,0 +1,7 @@
+---
+- host: cockpit
+- name: install serviceONE
+  docker:
+    name: serviceONE
+    image: tutum/hello-world
+    state: present

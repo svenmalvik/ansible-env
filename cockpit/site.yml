@@ -28,4 +28,4 @@
   - name: clone default git repo
     tags: repo
     git:  repo={{ default_repo }} 
-          dest=/home/hosm/projects/configs 
+          dest=/home/hosm/projects/default_repo
