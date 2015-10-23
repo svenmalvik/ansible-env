@@ -13,6 +13,13 @@
     sudo: yes
     yum: name=ansible state=present
 
+  - name: install docker
+    sudo: yes
+    yum: name=docker state=present
+
+  - name: start docker
+    service: name=docker enabled=true state=started    
+
   - name: install git
     sudo: yes
     yum: name=git state=present
@@ -21,7 +28,7 @@
     tags: repo
     file: path=~/projects state=directory mode=0755
 
-  - name: print default_repo
+  - name: print default git repo to fetch
     debug: msg={{default_repo}}
     tags: repo
 
