@@ -1,0 +1,31 @@
+---
+- hosts: cockpit
+  tasks:  
+  - name: update yum  
+    sudo: yes
+    yum: name=*
+
+  - name: add epel extras
+    sudo: yes
+    yum: name=epel-release state=present
+
+  - name: install ansible
+    sudo: yes
+    yum: name=ansible state=present
+
+  - name: install git
+    sudo: yes
+    yum: name=git state=present
+
+  - name: create prosject folder
+    tags: repo
+    file: path=~/projects state=directory mode=0755
+
+  - name: print default_repo
+    debug: msg={{default_repo}}
+    tags: repo
+
+  - name: clone default git repo
+    tags: repo
+    git:  repo={{ default_repo }} 
+          dest=/home/hosm/projects/configs 
