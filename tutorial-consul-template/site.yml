@@ -8,6 +8,8 @@
       name: serviceONE
       image: tutum/hello-world
       state: reloaded
+      ports:
+        - 80
 
   - name: create haproxy config file directory
     become: yes
