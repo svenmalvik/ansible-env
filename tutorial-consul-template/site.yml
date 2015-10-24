@@ -25,6 +25,7 @@
       name: reverse_proxy
       image: haproxy
       state: reloaded
+      expose: 80
       ports: 80:80
       volumes:
         - /etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
