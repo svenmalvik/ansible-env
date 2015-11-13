@@ -13,11 +13,11 @@
 
   - name: create haproxy config file directory
     become: yes
-    file: path=/etc/haproxy state=directory
+    file: path=/var/haproxy state=directory
 
   - name: copy haproxy config
     become: yes
-    copy: src=haproxy.cfg dest=/etc/haproxy
+    copy: src=haproxy.cfg dest=/var/haproxy
 
   - name: run HAProxy
     become: yes
@@ -29,4 +29,4 @@
       expose: 80
       ports: 80:80
       volumes:
-        - /etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
+        - /var/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
