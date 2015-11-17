@@ -3,30 +3,63 @@
   tasks:
   - name: run serviceONE
     become: yes
+    tags: serviceONE
     docker:
       docker_api_version: 1.18
       name: serviceONE
       image: tutum/hello-world
       state: reloaded
       ports:
-        - 80
+        - 90:80
 
   - name: create haproxy config file directory
+    tags: haproxy 
     become: yes
     file: path=/var/haproxy state=directory
 
   - name: copy haproxy config
+    tags: haproxy 
     become: yes
     copy: src=haproxy.cfg dest=/var/haproxy
 
-  - name: run HAProxy
+  - name: run haproxy
+    tags: haproxy 
     become: yes
     docker:
       docker_api_version: 1.18
       name: reverse_proxy
       image: haproxy
+      pull: always
       state: reloaded
       expose: 80
       ports: 80:80
       volumes:
         - /var/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
+
+  - name: run consul
+    tags: consul
+    become: yes
+    docker:
+      docker_api_version: 1.18
+      name: consul
+      image: progrium/consul
+      hostname: node1
+      state: reloaded
+      command: "-server -bootstrap -ui-dir /ui"
+      ports:
+        - "8400:8400"
+        - "8500:8500"
+        - "53:53"
+
+  - name: run registrator
+    tags: registrator
+    docker:
+      docker_api_version: 1.18
+      image: gliderlabs/registrator
+      state: restarted
+      restart_policy: always
+      name: registrator
+      net: host
+      volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      command: -resync 240 consul://{{ansible_default_ipv4.address}}:8500
