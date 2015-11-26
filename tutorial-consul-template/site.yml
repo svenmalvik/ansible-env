@@ -35,12 +35,12 @@
       name: reverse_proxy
       pull: always
       image: svenmalvik/consultemplate-haproxy
-      image: haproxy
+#      image: haproxy
       state: restarted
       expose: 80
       ports: 80:80
       volumes:
-        - /var/haproxy/:/usr/local/etc/haproxy/
+        - /var/haproxy:/usr/local/etc/haproxy
 
   - name: run consul
     tags: consul
