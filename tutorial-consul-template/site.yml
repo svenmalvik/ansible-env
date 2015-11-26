@@ -30,7 +30,7 @@
       name: reverse_proxy
       image: haproxy
       pull: always
-      state: reloaded
+      state: restarted
       expose: 80
       ports: 80:80
       volumes:
@@ -63,3 +63,6 @@
       volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       command: -resync 240 consul://{{ansible_default_ipv4.address}}:8500
+
+  - name: run consul template
+    
