@@ -1,1 +1,6 @@
-test
+frontend http
+	bind *:80
+	default_backend default
+
+backend default
+	server web1 192.168.231.145:90
