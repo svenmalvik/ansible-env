@@ -22,10 +22,10 @@
     become: yes
     copy: src=haproxy.cfg dest=/var/haproxy
 
-#  - name: copy haproxy tmpl
-#    tags: haproxy 
-#    become: yes
-#    copy: src=haproxy.tmpl dest=/var/haproxy
+  - name: copy haproxy tmpl
+    tags: haproxy 
+    become: yes
+    copy: src=haproxy.tmpl dest=/var/haproxy
 
   - name: run haproxy
     tags: haproxy 
@@ -34,7 +34,7 @@
       docker_api_version: 1.18
       name: reverse_proxy
       pull: always
-#      image: svenmalvik/consultemplate-haproxy
+      image: svenmalvik/consultemplate-haproxy
       image: haproxy
       state: restarted
       expose: 80
@@ -70,5 +70,4 @@
       - /var/run/docker.sock:/tmp/docker.sock
       command: -resync 240 consul://{{ansible_default_ipv4.address}}:8500
 
-  - name: run consul template
     
