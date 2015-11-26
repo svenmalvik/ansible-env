@@ -19,6 +19,9 @@
             dest=/etc/yum.repos.d/
             owner=root group=root mode=0644
 
+  - name:   disable selinux
+    selinux: state=permissive policy=targeted
+
   - name:   installer docker-engine
     become: yes
     yum:    name=docker-engine state=latest
