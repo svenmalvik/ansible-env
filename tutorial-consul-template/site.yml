@@ -28,8 +28,9 @@
     docker:
       docker_api_version: 1.18
       name: reverse_proxy
-      image: haproxy
       pull: always
+#      image: svenmalvik/consultemplate-haproxy
+      image: haproxy
       state: restarted
       expose: 80
       ports: 80:80
