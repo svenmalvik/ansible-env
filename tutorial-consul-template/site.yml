@@ -22,6 +22,11 @@
     become: yes
     copy: src=haproxy.cfg dest=/var/haproxy
 
+#  - name: copy haproxy tmpl
+#    tags: haproxy 
+#    become: yes
+#    copy: src=haproxy.tmpl dest=/var/haproxy
+
   - name: run haproxy
     tags: haproxy 
     become: yes
@@ -35,7 +40,7 @@
       expose: 80
       ports: 80:80
       volumes:
-        - /var/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:rw
+        - /var/haproxy/:/usr/local/etc/haproxy/
 
   - name: run consul
     tags: consul
