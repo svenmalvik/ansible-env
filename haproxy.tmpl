@@ -1,8 +1,0 @@
-frontend http
-	bind *:80
-	default_backend default
-
-backend default
-{{range service "hello-world" }} 
-	server {{.Name}}_{{.Port}} {{.Address}}:{{.Port}}
-{{end}}
