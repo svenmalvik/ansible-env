@@ -22,10 +22,15 @@
     become: yes
     copy: src=haproxy.cfg dest=/var/haproxy
 
+  - name: create haproxydynamic config file directory
+    tags: haproxy 
+    become: yes
+    file: path=/var/haproxydynamic state=directory
+  
   - name: copy haproxy tmpl
     tags: haproxy 
     become: yes
-    copy: src=haproxy.tmpl dest=/var/haproxy
+    copy: src=haproxy.tmpl dest=/var/haproxydynamic
 
   - name: run haproxy
     tags: haproxy 
@@ -34,13 +39,26 @@
       docker_api_version: 1.18
       name: reverse_proxy
       pull: always
-      image: svenmalvik/consultemplate-haproxy
-#      image: haproxy
+      image: haproxy
       state: restarted
       expose: 80
       ports: 80:80
       volumes:
         - /var/haproxy:/usr/local/etc/haproxy
+
+  - name: run dynamic haproxy
+    tags: haproxydynamic 
+    become: yes
+    docker:
+      docker_api_version: 1.18
+      name: reverse_proxy_dynamic
+      pull: always
+      image: svenmalvik/consultemplate-haproxy
+      state: restarted
+      expose: 80
+      ports: 81:80
+      volumes:
+        - /var/haproxydynamic:/usr/local/etc/haproxy
 
   - name: run consul
     tags: consul
@@ -58,6 +76,7 @@
         - "53:53"
 
   - name: run registrator
+    become: yes
     tags: registrator
     docker:
       docker_api_version: 1.18
